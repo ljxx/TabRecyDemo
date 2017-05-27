@@ -17,14 +17,36 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    //Error:Conflict with dependency 'com.google.code.findbugs:jsr305'
+    // in project ':app'. Resolved versions for app (3.0.1) and test app (2.0.1) differ.
+    // See http://g.co/androidstudio/app-test-app-conflict for details.
+    configurations.all {
+        resolutionStrategy.force 'com.google.code.findbugs:jsr305:1.3.9'
+    }
 }
 
+def supportVerion = "25.1.1";
+def rxjavaVersion = "2.1.0"
+def rxandroidVersion = "2.0.1"
+
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.1.1'
+    compile "com.android.support:recyclerview-v7:$supportVerion"
+    compile "com.android.support:design:$supportVerion"
+    compile "com.android.support:support-v4:$supportVerion"
+    compile "com.android.support:appcompat-v7:$supportVerion"
+    compile "com.android.support:cardview-v7:$supportVerion"
+    compile "io.reactivex.rxjava2:rxandroid:$rxandroidVersion"
+    compile "io.reactivex.rxjava2:rxjava:$rxjavaVersion"
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava2:2.2.0'
+    compile 'com.trello.rxlifecycle2:rxlifecycle-components:2.0.1'
+    compile 'com.android.support:support-v4:25.1.1'
     testCompile 'junit:junit:4.12'
 }
